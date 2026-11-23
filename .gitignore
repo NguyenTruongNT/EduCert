@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Hardhat artifacts & cache
+artifacts/
+cache/
+typechain-types/
+ignition/deployments/
+
+# Build outputs
+dist/
+build/
+backend/dist/
+frontend/dist/
+
+# Environment & secrets (DO NOT COMMIT)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Off-chain private storage & local SQLite databases
+backend/storage/
+backend/uploads/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Logs & temporary files
+*.log
+npm-debug.log*
+~$*.docx
+.DS_Store
+Thumbs.db
+extract_docx.ps1

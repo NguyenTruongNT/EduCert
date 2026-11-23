@@ -1,0 +1,27 @@
+{
+  "name": "educert",
+  "version": "1.0.0",
+  "description": "EduCert - Hop dong luu tru chung chi hoc tap (Kien truc ket hop On-chain va Off-chain)",
+  "type": "module",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:local": "hardhat ignition deploy ./ignition/modules/CertificateRegistry.js --network localhost",
+    "export-config": "node scripts/export-config.js",
+    "measure-gas": "hardhat run scripts/measure-gas.js --network hardhat"
+  },
+  "keywords": [
+    "blockchain",
+    "smart-contract",
+    "solidity",
+    "hardhat",
+    "educert"
+  ],
+  "author": "Luc Van Thuan <2351170624>",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.2",
+    "@openzeppelin/contracts": "^5.2.0",
+    "hardhat": "^2.22.0"
+  }
+}
