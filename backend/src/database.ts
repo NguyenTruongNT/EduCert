@@ -16,6 +16,10 @@ export function openDatabase(path: string): Database.Database {
   db.pragma('journal_mode = WAL');
   db.pragma('foreign_keys = ON');
   db.pragma('busy_timeout = 5000');
+  if (Number(db.pragma('user_version', { simple: true })) > 1) {
+    db.close();
+    throw new Error('Database schema is newer than this backend supports');
+  }
   db.transaction(() => {
     db.exec(`
       CREATE TABLE IF NOT EXISTS CertificateFile (

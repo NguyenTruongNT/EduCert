@@ -10,9 +10,13 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck:examples": "tsc --noEmit -p tsconfig.examples.json",
+    "verify": "node scripts/verify.mjs",
     "start": "node dist/server.js",
     "setup:env": "node scripts/init-env.mjs",
     "migrate": "tsx src/migrate.ts",
+    "reconcile:pending": "tsx src/reconcile.ts",
+    "pretest": "npm --prefix .. run compile",
     "test": "tsx --test --test-concurrency=1 test/backend.test.ts"
   },
   "dependencies": {

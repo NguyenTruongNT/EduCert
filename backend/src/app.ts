@@ -53,6 +53,7 @@ export function createApp(config: AppConfig, database?: Database.Database) {
 }
 
 const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
+  if (res.headersSent) { _next(error); return; }
   let failure: ApiError;
   if (error instanceof ApiError) failure = error;
   else if (error instanceof ZodError) failure = new ApiError(400, 'VALIDATION_ERROR', error.issues.map(issue => `${issue.path.join('.')}: ${issue.message}`).join('; '));

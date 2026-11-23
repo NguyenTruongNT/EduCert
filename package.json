@@ -8,6 +8,7 @@
     "test": "hardhat test",
     "deploy:local": "hardhat ignition deploy ./ignition/modules/CertificateRegistry.js --network localhost",
     "export-config": "node scripts/export-config.js",
+    "setup-demo": "hardhat run scripts/setup-demo.js --network localhost",
     "measure-gas": "hardhat run scripts/measure-gas.js --network hardhat",
     "dev:backend": "npm --prefix backend run dev",
     "build:backend": "npm --prefix backend run build",

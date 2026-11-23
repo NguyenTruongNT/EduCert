@@ -1,0 +1,196 @@
+TAP version 13
+# Subtest: BE-01: nonce expiry and replay are rejected
+ok 1 - BE-01: nonce expiry and replay are rejected
+  ---
+  duration_ms: 3469.7742
+  type: 'test'
+  ...
+# Subtest: BE-02: a signature from the wrong wallet returns 401
+ok 2 - BE-02: a signature from the wrong wallet returns 401
+  ---
+  duration_ms: 477.3984
+  type: 'test'
+  ...
+# Subtest: BE-03: issuer role is checked on-chain after login
+ok 3 - BE-03: issuer role is checked on-chain after login
+  ---
+  duration_ms: 578.184
+  type: 'test'
+  ...
+# Subtest: BE-04: uploads larger than 5 MiB return 413
+ok 4 - BE-04: uploads larger than 5 MiB return 413
+  ---
+  duration_ms: 579.3204
+  type: 'test'
+  ...
+# Subtest: BE-05: student B cannot download student A certificate
+ok 5 - BE-05: student B cannot download student A certificate
+  ---
+  duration_ms: 1271.3586
+  type: 'test'
+  ...
+# Subtest: BE-06: anonymous download returns 401
+ok 6 - BE-06: anonymous download returns 401
+  ---
+  duration_ms: 1090.7116
+  type: 'test'
+  ...
+# Subtest: BE-07: fake txHash never marks the draft ISSUED
+ok 7 - BE-07: fake txHash never marks the draft ISSUED
+  ---
+  duration_ms: 1029.8608
+  type: 'test'
+  ...
+# Subtest: BE-08: RPC interruption persists pending tx and retry survives restart
+ok 8 - BE-08: RPC interruption persists pending tx and retry survives restart
+  ---
+  duration_ms: 1302.9302
+  type: 'test'
+  ...
+# Subtest: BE-09: downloaded final PDF matches SHA-256 and Web Crypto digest
+ok 9 - BE-09: downloaded final PDF matches SHA-256 and Web Crypto digest
+  ---
+  duration_ms: 1120.5132
+  type: 'test'
+  ...
+# Subtest: BE-10: upload filenames and invalid storage keys cannot traverse paths
+ok 10 - BE-10: upload filenames and invalid storage keys cannot traverse paths
+  ---
+  duration_ms: 931.788
+  type: 'test'
+  ...
+# Subtest: API: signed PDFs are rejected even when signature dictionaries are compressed
+ok 11 - API: signed PDFs are rejected even when signature dictionaries are compressed
+  ---
+  duration_ms: 522.1438
+  type: 'test'
+  ...
+# Subtest: API: CSRF and cross-origin protections reject unauthorized writes
+ok 12 - API: CSRF and cross-origin protections reject unauthorized writes
+  ---
+  duration_ms: 468.4663
+  type: 'test'
+  ...
+# Subtest: API: expired sessions are rejected
+ok 13 - API: expired sessions are rejected
+  ---
+  duration_ms: 461.8398
+  type: 'test'
+  ...
+# Subtest: API: draft metadata and preview are restricted to original issuer
+ok 14 - API: draft metadata and preview are restricted to original issuer
+  ---
+  duration_ms: 967.8819
+  type: 'test'
+  ...
+# Subtest: API: receipt with wrong file hash is rejected
+ok 15 - API: receipt with wrong file hash is rejected
+  ---
+  duration_ms: 975.6717
+  type: 'test'
+  ...
+# Subtest: API: receipt with wrong student is rejected
+ok 16 - API: receipt with wrong student is rejected
+  ---
+  duration_ms: 968.8994
+  type: 'test'
+  ...
+# Subtest: API: a transaction sent to another contract is rejected
+ok 17 - API: a transaction sent to another contract is rejected
+  ---
+  duration_ms: 1128.9119
+  type: 'test'
+  ...
+# Subtest: API: transaction sender must match draft issuer
+ok 18 - API: transaction sender must match draft issuer
+  ---
+  duration_ms: 1033.8016
+  type: 'test'
+  ...
+# Subtest: API: successful transaction without matching issuance event is rejected
+ok 19 - API: successful transaction without matching issuance event is rejected
+  ---
+  duration_ms: 1151.052
+  type: 'test'
+  ...
+# Subtest: API: pending receipt returns 202 and later finalizes the same transaction
+ok 20 - API: pending receipt returns 202 and later finalizes the same transaction
+  ---
+  duration_ms: 1073.3205
+  type: 'test'
+  ...
+# Subtest: API: reverted receipt cannot finalize a certificate
+ok 21 - API: reverted receipt cannot finalize a certificate
+  ---
+  duration_ms: 1113.3232
+  type: 'test'
+  ...
+# Subtest: API: public lookup is chain-authoritative and does not expose PII
+ok 22 - API: public lookup is chain-authoritative and does not expose PII
+  ---
+  duration_ms: 1154.7063
+  type: 'test'
+  ...
+# Subtest: API: revocation refreshes student status and event pagination
+ok 23 - API: revocation refreshes student status and event pagination
+  ---
+  duration_ms: 1468.0659
+  type: 'test'
+  ...
+# Subtest: API: wrong RPC chain and undeployed contract return RPC_ERROR
+ok 24 - API: wrong RPC chain and undeployed contract return RPC_ERROR
+  ---
+  duration_ms: 516.4072
+  type: 'test'
+  ...
+# Subtest: API: changing stored PDF bytes is detected on download
+ok 25 - API: changing stored PDF bytes is detected on download
+  ---
+  duration_ms: 1065.2834
+  type: 'test'
+  ...
+# Subtest: API: personal list filters by session wallet and validates pagination
+ok 26 - API: personal list filters by session wallet and validates pagination
+  ---
+  duration_ms: 1292.9701
+  type: 'test'
+  ...
+# Subtest: API: session restore, hashed token storage and logout work
+ok 27 - API: session restore, hashed token storage and logout work
+  ---
+  duration_ms: 510.4234
+  type: 'test'
+  ...
+# Subtest: API: receipt cannot be reused for another draft or replace a finalized tx
+ok 28 - API: receipt cannot be reused for another draft or replace a finalized tx
+  ---
+  duration_ms: 1425.3267
+  type: 'test'
+  ...
+# Subtest: API: valid historical issuance can reconcile after issuer role removal
+ok 29 - API: valid historical issuance can reconcile after issuer role removal
+  ---
+  duration_ms: 1187.5109
+  type: 'test'
+  ...
+# Subtest: API: original issuer and admin can download a finalized certificate
+ok 30 - API: original issuer and admin can download a finalized certificate
+  ---
+  duration_ms: 1194.4246
+  type: 'test'
+  ...
+# Subtest: API: malformed PDF, wrong MIME, empty fields and issuer spoofing are rejected
+ok 31 - API: malformed PDF, wrong MIME, empty fields and issuer spoofing are rejected
+  ---
+  duration_ms: 757.6456
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38736.4277

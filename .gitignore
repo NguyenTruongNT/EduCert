@@ -13,6 +13,7 @@ ignition/deployments/
 dist/
 build/
 backend/dist/
+backend/reports/
 frontend/dist/
 
 # Environment & secrets (DO NOT COMMIT)
