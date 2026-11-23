@@ -65,6 +65,36 @@ export class ChainService {
     });
   }
 
+  async stats() {
+    return this.rpc(async () => {
+      const result = await this.contract.getFunction('getStats')();
+      return { issued: Number(result[0]), revoked: Number(result[1]), active: Number(result[2]) };
+    });
+  }
+
+  async events(options: { fromBlock?: number; toBlock?: number; offset: number; limit: number; type: 'ALL' | 'ISSUED' | 'REVOKED' }) {
+    return this.rpc(async () => {
+      const latest = await this.provider.getBlockNumber();
+      const toBlock = options.toBlock ?? latest;
+      const fromBlock = options.fromBlock ?? Math.max(0, toBlock - 4999);
+      invariant(fromBlock <= toBlock && toBlock <= latest && toBlock - fromBlock < 5000, 400, 'INVALID_BLOCK_RANGE', 'Use an ordered window of at most 5000 mined blocks');
+      const issueTopic = this.contract.interface.getEvent('CertificateIssued')!.topicHash;
+      const revokeTopic = this.contract.interface.getEvent('CertificateRevoked')!.topicHash;
+      const topics = options.type === 'ISSUED' ? [issueTopic] : options.type === 'REVOKED' ? [revokeTopic] : [issueTopic, revokeTopic];
+      const logs = await this.provider.getLogs({ address: this.config.contractAddress, fromBlock, toBlock, topics: [topics] });
+      const records = logs.sort((a, b) => b.blockNumber - a.blockNumber || b.index - a.index).map(log => {
+        const event = this.contract.interface.parseLog({ topics: [...log.topics], data: log.data })!;
+        const common = { type: event.name === 'CertificateIssued' ? 'ISSUED' : 'REVOKED', certificateId: event.args.certificateId.toLowerCase(), txHash: log.transactionHash,
+          blockNumber: log.blockNumber, blockHash: log.blockHash, logIndex: log.index };
+        return event.name === 'CertificateIssued'
+          ? { ...common, issuer: event.args.issuer, student: event.args.student, fileHash: event.args.fileHash.toLowerCase(), issuedAt: unixToIso(event.args.issuedAt) }
+          : { ...common, revokedBy: event.args.revokedBy, revokeReasonCode: Number(event.args.reasonCode), revokedAt: unixToIso(event.args.revokedAt) };
+      });
+      return { items: records.slice(options.offset, options.offset + options.limit), total: records.length, offset: options.offset, limit: options.limit, fromBlock, toBlock,
+        previousToBlock: fromBlock > 0 ? fromBlock - 1 : null, nextFromBlock: toBlock < latest ? toBlock + 1 : null };
+    });
+  }
+
   private mapCertificate(raw: any): ChainCertificate {
     return {
       fileHash: raw.fileHash.toLowerCase(), issuer: raw.issuer, student: raw.student,

@@ -14,6 +14,7 @@ import { PrivateStorage } from './services/storage.js';
 import { mountFiles } from './routes/files.js';
 import { DefaultPdfAdapter } from './services/pdf.js';
 import { mountDrafts } from './routes/drafts.js';
+import { mountQueries } from './routes/queries.js';
 
 export function createApp(config: AppConfig, database?: Database.Database) {
   const db = database ?? openDatabase(config.databasePath);
@@ -44,6 +45,7 @@ export function createApp(config: AppConfig, database?: Database.Database) {
   auth.mount(api);
   mountFiles(api, config, db, auth, chain, storage);
   mountDrafts(api, config, db, auth, chain, storage, new DefaultPdfAdapter());
+  mountQueries(api, config, db, auth, chain);
 
   app.use((_req, _res, next) => next(new ApiError(404, 'ROUTE_NOT_FOUND', 'Route not found')));
   app.use(errorHandler);
