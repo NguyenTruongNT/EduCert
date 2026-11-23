@@ -10,10 +10,13 @@ import { openDatabase } from './database.js';
 import { ApiError } from './errors.js';
 import { ChainService } from './services/chain.js';
 import { createAuth } from './auth.js';
+import { PrivateStorage } from './services/storage.js';
+import { mountFiles } from './routes/files.js';
 
 export function createApp(config: AppConfig, database?: Database.Database) {
   const db = database ?? openDatabase(config.databasePath);
   const chain = new ChainService(config);
+  const storage = new PrivateStorage(config.storageDir);
   const app = express();
   app.disable('x-powered-by');
   app.use(helmet());
@@ -23,6 +26,7 @@ export function createApp(config: AppConfig, database?: Database.Database) {
       else callback(new ApiError(403, 'ORIGIN_NOT_ALLOWED', 'Origin is not allowed'));
     },
     credentials: true, methods: ['GET', 'POST', 'OPTIONS'], allowedHeaders: ['Content-Type', 'X-CSRF-Token'],
+    exposedHeaders: ['X-File-Hash', 'Content-Disposition'],
   }));
   app.use(express.json({ limit: '64kb' }));
   app.use(cookieParser());
@@ -36,10 +40,11 @@ export function createApp(config: AppConfig, database?: Database.Database) {
   } }));
   const auth = createAuth(config, db, chain);
   auth.mount(api);
+  mountFiles(api, config, db, auth, chain, storage);
 
   app.use((_req, _res, next) => next(new ApiError(404, 'ROUTE_NOT_FOUND', 'Route not found')));
   app.use(errorHandler);
-  return { app, db, chain };
+  return { app, db, chain, storage };
 }
 
 const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
