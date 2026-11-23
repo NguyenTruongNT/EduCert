@@ -8,9 +8,12 @@ import type Database from 'better-sqlite3';
 import { type AppConfig, MAX_PDF_BYTES } from './config.js';
 import { openDatabase } from './database.js';
 import { ApiError } from './errors.js';
+import { ChainService } from './services/chain.js';
+import { createAuth } from './auth.js';
 
 export function createApp(config: AppConfig, database?: Database.Database) {
   const db = database ?? openDatabase(config.databasePath);
+  const chain = new ChainService(config);
   const app = express();
   app.disable('x-powered-by');
   app.use(helmet());
@@ -31,10 +34,12 @@ export function createApp(config: AppConfig, database?: Database.Database) {
     chainId: config.chainId, contractAddress: config.contractAddress, abi: config.abi,
     publicAppUrl: config.publicAppUrl, maxPdfBytes: MAX_PDF_BYTES,
   } }));
+  const auth = createAuth(config, db, chain);
+  auth.mount(api);
 
   app.use((_req, _res, next) => next(new ApiError(404, 'ROUTE_NOT_FOUND', 'Route not found')));
   app.use(errorHandler);
-  return { app, db };
+  return { app, db, chain };
 }
 
 const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
