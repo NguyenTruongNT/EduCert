@@ -29,6 +29,10 @@ backend/uploads/
 *.sqlite3
 *.db
 *.db-journal
+*.sqlite-wal
+*.sqlite-shm
+*.db-wal
+*.db-shm
 
 # Logs & temporary files
 *.log
